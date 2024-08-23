@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
         service: 'gmail',
         auth: {
           user: 'thoughtvinehelp@gmail.com',
-          pass: 'inwp mfpt gcvh namx'// Use environment variable for security
+          pass: 'inwp mfpt gcvh namx' // Use environment variable for security
         }
       });
 

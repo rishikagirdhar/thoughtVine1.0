@@ -7,6 +7,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const methodOverride = require("method-override");
 const User = require("./models/user");
+const flash = require("connect-flash");
 
 //---------DATABASE SETUP------------------
 const mongo_uri = process.env.mongo_uri;
@@ -56,7 +57,13 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use(flash());
 
+// Middleware to pass flash messages to templates
+app.use((req, res, next) => {
+    res.locals.errorMessage = req.flash("error");
+    next();
+});
 //to get current logged in user
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -70,6 +77,7 @@ app.use("/posts/:id/comments", commentRoutes);
 app.use("/user", userRoutes);
 app.use("/forgot" , forgotRoutes);
 app.use("/reset" , resetRoutes)
+
 
 let port = process.env.PORT || 8080;
 

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user");
+const flash = require("connect-flash");
 
 
 
@@ -59,8 +60,9 @@ router.get("/login", (req, res) => {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/posts",
-    failureRedirect: "/login",
+    successRedirect: "/posts", // Redirect to the profile page on success
+    failureRedirect: "/login", // Redirect back to the login page on failure
+    failureFlash: true, // Enable flash messages for failures
   }),
   (req, res) => {}
 );

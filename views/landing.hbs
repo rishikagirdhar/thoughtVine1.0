@@ -35,6 +35,12 @@
                     <a class="nav-link"  href="/user/{{currentUser.username}}">My Posts</a>
                 </li>
                 {{/if}}
+                <li class="nav-item active">
+                    <a class="nav-link" href="/posts">About Us</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/posts">Join Us</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 {{#unless currentUser}}
@@ -61,6 +67,7 @@
             <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="/posts">SHOW POSTS</a>
         </div>
     </header>
+    
     <!-- Bootstrap core JS-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
