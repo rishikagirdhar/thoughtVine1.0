@@ -21,12 +21,11 @@ UserSchema.pre('save', function(next) {
 });
 
 UserSchema.methods.comparePassword = function(candidatePassword, callback) {
-  // bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-  //   if (err) return callback(err);
-  //   callback(null, isMatch);
-  // });
-  const prt = bcrypt.compareSync(candidatePassword, this.password);
-  console.log(prt);
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    if (err) return callback(err);
+    callback(null, isMatch);
+  });
+  //const prt = bcrypt.compareSync(candidatePassword, this.password);
 };
 UserSchema.plugin(passwordLocalMongoose);
 
