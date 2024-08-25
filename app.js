@@ -7,6 +7,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const methodOverride = require("method-override");
 const User = require("./models/user");
+const path = require('path');
 const flash = require("connect-flash");
 
 //---------DATABASE SETUP------------------
@@ -33,6 +34,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "hbs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+app.use('/uploads', express.static('uploads'));
+// Serve static files from the 'public' folder (if you are using a different folder, adjust accordingly)
+app.use(express.static(path.join(__dirname, 'public')));
+
 //-------------------------------------------
 
 //------------ROUTERS------------------------
@@ -42,6 +47,7 @@ const indexRoutes = require("./routes/index");
 const userRoutes = require("./routes/user");
 const forgotRoutes = require("./routes/forgot");
 const resetRoutes = require("./routes/reset");
+const joinusRoutes = require("./routes/joinus")
 //---------------------------------------------
 
 //------------PASSPORT CONFIGURATION-----------
@@ -77,7 +83,7 @@ app.use("/posts/:id/comments", commentRoutes);
 app.use("/user", userRoutes);
 app.use("/forgot" , forgotRoutes);
 app.use("/reset" , resetRoutes)
-
+app.use("/joinus" , joinusRoutes)
 
 let port = process.env.PORT || 8080;
 

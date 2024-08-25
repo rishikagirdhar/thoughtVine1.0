@@ -7,59 +7,68 @@
     <title>Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
+    <link href="/login.css" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Pic Blog</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/posts">Posts</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                {{#unless currentUser}}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Sign Up</a>
-                </li>
-                {{else}}
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/{{currentUser.username}}">Signed In as {{currentUser.username}}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">LogOut</a>
-                </li>
-                {{/unless}}
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">thoughtVine</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/posts">Posts</a>
+                    </li>
+                    {{#if currentUser}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/{{currentUser.username}}">My Posts</a>
+                    </li>
+                    {{/if}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/join">Join Us</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {{#unless currentUser}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Sign Up</a>
+                    </li>
+                    {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/{{currentUser.username}}">Signed In as {{currentUser.username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">LogOut</a>
+                    </li>
+                    {{/unless}}
+                </ul>
+            </div>
         </div>
     </nav>
-    <br>
-    <div class="container">
-        <h1 style="text-align: center;">SIGN UP</h1>
-        <div style="width: 30%; margin: 25px auto;">
-            
+
+    <div class="container flex-grow-1 d-flex flex-column justify-content-center">
+        <h1 class="text-center" style="margin-bottom: 20px;">SIGN UP</h1> <!-- Reduced margin-bottom -->
+        <div class="form-container">
             <!-- Display the error message if it exists -->
             {{#if errorMessage}}
-                <div class="alert alert-danger" role="alert">
-                    {{errorMessage}}
-                </div>
+            <div class="alert alert-danger" role="alert">
+                {{errorMessage}}
+            </div>
             {{/if}}
-            
+
             <form action="/register" method="POST">
                 <div class="form-group">
                     <input class="form-control" type="text" name="username" placeholder="Username" required>
@@ -74,9 +83,25 @@
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                 </div>
             </form>
-            <a href="/posts">Go back</a>
+            <a href="/posts" class="btn btn-link">Go back</a>
         </div>
     </div>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>&copy; 2024 thoughtVine. All Rights Reserved.</p>
+            <div>
+                <a href="#" class="text-white mr-3"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white mr-3"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-white mr-3"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

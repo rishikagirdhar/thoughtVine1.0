@@ -5,29 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Freestyle+Script&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="/reset.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container">
-        <h1>Forgot Password</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">thoughtVine</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <!-- Other navbar items here -->
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <!-- Login/Signup links or User info -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content container with flex-grow -->
+    <div class="container flex-grow-1 d-flex flex-column justify-content-center">
+        <h1 class="text-center">Forgot Password</h1>
 
         {{#if errorMessage}}
-            <div class="alert alert-danger">{{errorMessage}}</div>
+        <div class="alert alert-danger">{{errorMessage}}</div>
         {{/if}}
 
         {{#if successMessage}}
-            <div class="alert alert-success">{{successMessage}}</div>
+        <div class="alert alert-success">{{successMessage}}</div>
         {{/if}}
 
-        <form action="/forgot" method="POST">
-            <div class="form-group">
-                <label for="email">Enter your email address:</label>
-                <input type="email" name="emailId" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        <div class="form-container">
+            <form action="/forgot" method="POST">
+                <div class="form-group">
+                    <label for="email">Enter your email address:</label>
+                    <input type="email" name="emailId" class="form-control" required placeholder="Email ID">
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+            </form>
+        </div>
     </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <div class="container">
+            <p>&copy; 2024 thoughtVine. All Rights Reserved.</p>
+            <div>
+                <a href="#" class="text-white mr-3"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white mr-3"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-white mr-3"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

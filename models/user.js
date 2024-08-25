@@ -7,7 +7,10 @@ var UserSchema = new mongoose.Schema({
   emailId: String,
   password: String,
   resetPasswordToken: String,
-  resetPasswordExpires: Date
+  resetPasswordExpires: Date,
+  profilePicture: String,  // URL or path to the user's profile picture
+  bio: String,             // A short biography or user description
+  otherDetails: String     // Any additional details you want to store
 });
 // Hash the password before saving
 UserSchema.pre('save', function(next) {
