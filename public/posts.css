@@ -1,7 +1,15 @@
 /* General Styles */
+/* Navbar */
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  justify-content: flex-start;
+}
+
 body {
-  font-family: Arial, sans-serif;
   background-color: #f4f4f4;
+  font-family: 'Courier New', monospace;
   margin: 0;
   padding: 0;
   display: flex;
@@ -58,6 +66,27 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+.like-section, .comment-section {
+  margin-top: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.like-icon, .comment-icon {
+  font-size: 1.5em;
+  margin-right: 5px;
+
+  cursor: pointer;
+  color: grey; /* Default color for unliked state */
+}
+.like-icon.liked {
+  color: red; /* Color when liked */
+}
+
+.like-icon:hover, .comment-icon:hover {
+  color: darkred; /* Change this to your preferred color */
+}
+
 
 /* Footer Styles */
 footer {
