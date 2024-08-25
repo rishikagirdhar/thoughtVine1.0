@@ -29,6 +29,39 @@ const getTrendingHashtags = async () => {
   }
 };
 
+router.post("/:id/like", middleware.isLoggedIn, async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const userId = req.user._id;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ success: false, message: "Post not found." });
+    }
+
+    // Check if the user has already liked the post
+    const userIndex = post.likedBy.indexOf(userId);
+
+    if (userIndex !== -1) {
+      // If user has already liked, remove their like (unlike)
+      post.likes -= 1;
+      post.likedBy.splice(userIndex, 1); // Remove user ID from likedBy array
+    } else {
+      // If user has not liked yet, add their like
+      post.likes += 1;
+      post.likedBy.push(userId);
+    }
+
+    await post.save();
+
+    res.json({ success: true, newLikeCount: post.likes, liked: userIndex === -1 });
+  } catch (error) {
+    console.error("Error toggling like on post:", error);
+    res.status(500).json({ success: false, message: "An error occurred while toggling like on the post." });
+  }
+});
+
 // Display all posts
 router.get("/", async (req, res) => {
   try {
@@ -36,13 +69,14 @@ router.get("/", async (req, res) => {
     const trendingHashtags = await getTrendingHashtags();
 
     res.render("posts/index", {
-      posts: posts.reverse(),
+      posts,
       trendingHashtags,
-      currentUser: req.user
+      currentUser: req.user, // Pass the current user
+      isAuthenticated: req.isAuthenticated(), // Add isAuthenticated to check login status
     });
   } catch (err) {
-    console.error("Error fetching posts or trending hashtags:", err);
-    res.status(500).send("An error occurred while fetching posts or trending hashtags.");
+    console.error("Error fetching posts:", err);
+    res.status(500).send("An error occurred while fetching posts.");
   }
 });
 
@@ -111,6 +145,19 @@ router.put("/:id", middleware.checkPostOwnership, (req, res) => {
       res.redirect("/posts/" + req.params.id);
     }
   });
+});
+
+// Handle Like Post
+router.post("/:id/like", middleware.isLoggedIn, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    post.likes += 1;
+    await post.save();
+    res.json({ success: true, newLikeCount: post.likes });
+  } catch (err) {
+    console.error("Error liking the post:", err);
+    res.status(500).json({ success: false, message: "An error occurred while liking the post." });
+  }
 });
 
 // Delete post
