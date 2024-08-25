@@ -1,0 +1,86 @@
+/* General Page Styles */
+body {
+    font-family: 'Courier New', monospace;
+    background-color: #2d4a6c; /* Light background for the whole page */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up full height */
+}
+
+/* Navbar Styles */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    text-align: left;
+  }
+/* Main Content Styles */
+
+
+h1 {
+    color: white; /* Primary heading color */
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
+
+/* Form Styles */
+.form-container {
+    width: 100%;
+    max-width: 400px; /* Set maximum width for forms */
+    margin: 0 auto; /* Center form horizontally */
+    padding: 1.5rem;
+    background-color: #ffffff; /* Form background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+}
+
+.form-control {
+    border: 1px solid #ced4da; /* Form input border color */
+    padding: 0.75rem; /* Padding inside form inputs */
+    border-radius: 4px; /* Slight rounding for input corners */
+    margin-bottom: 1rem; /* Spacing between form elements */
+    font-size: 1rem; /* Standard input text size */
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #2d4a6c; /* Button color matching the theme */
+    border-color: #2d4a6c; /* Button border color */
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+.btn-primary:hover {
+    background-color: #1b2f46; /* Darker shade on hover */
+    border-color: #1b2f46;
+}
+
+.btn-link {
+    color: #2d4a6c; /* Link button color */
+    text-decoration: none; /* Removes underline from link buttons */
+    transition: color 0.3s ease; /* Smooth transition for hover */
+}
+
+.btn-link:hover {
+    color: #1b2f46; /* Darker shade on hover for links */
+}
+
+/* Footer Styles */
+footer {
+    margin-top: auto; /* Pushes footer to the bottom */
+    padding: 1rem;
+    background-color: #2d4a6c; /* Footer background matching navbar */
+    color: white;
+    text-align: center;
+    box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1); /* Light shadow above footer */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}

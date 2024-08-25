@@ -49,4 +49,12 @@ middlewareObj.isLoggedIn = function (req, res, next) {
   res.redirect("/login");
 };
 
+// middleware/auth.js
+middlewareObj.ensureAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash("error_msg", "Please log in to view this resource");
+  res.redirect("/login");
+};
 module.exports = middlewareObj;
