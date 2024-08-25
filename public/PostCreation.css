@@ -1,0 +1,58 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Navbar */
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+  }
+  
+  /* Post Creation Form */
+  .container {
+    margin-top: 30px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  /* Form Styles */
+  .form-group label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    border-radius: 0.25rem;
+  }
+  
+  textarea.form-control {
+    border-radius: 0.25rem;
+  }
+  
+  .btn-primary {
+    background-color: #2d4a6c; /* Button color matching theme */
+    border-color: #2d4a6c;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1b2f46; /* Darker shade on hover */
+    border-color: #1b2f46;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+  }
+  
