@@ -11,6 +11,7 @@ var postSchema = mongoose.Schema({
     },
     username: String,
   },
+  hashtags: [String], // Add this field
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,

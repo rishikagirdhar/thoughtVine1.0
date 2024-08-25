@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posts</title>
+    <title>thoughtVine</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="/posts.css"> <!-- Link to the new CSS file -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Freestyle+Script&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/posts.css"> <!-- Your custom styles -->
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
@@ -59,28 +59,45 @@
         </div>
     </nav>
 
-    <div class="container mt-5 pt-5">
-        <header class="jumbotron text-center">
-            <h1>Welcome to thoughtVine</h1>
-            <p>View posts from users from all over the world</p>
-            <p>
-                <a class="btn btn-primary btn-large" href="/posts/publish">Add a new post</a>
-            </p>
-        </header>
-
+    <div class="container-fluid mt-5">
         <div class="row">
-            {{#each posts}}
-            <div class="col-md-4 mb-4">
-                <div class="card post-card">
-                    <img src="{{this.image}}" class="card-img-top" alt="{{this.name}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{this.name}}</h5>
-                        <p class="card-text">{{this.summary}}</p>
-                        <a href="/posts/{{this._id}}" class="btn btn-primary">More Info</a>
-                    </div>
+            <!-- Profile Section -->
+            <div class="col-md-3">
+                <div class="profile-section">
+                    <h3>My Profile</h3>
+                    <p><a href="/user/{{currentUser.username}}">View Profile</a></p>
                 </div>
             </div>
-            {{/each}}
+
+            <!-- Main Content: Posts -->
+            <div class="col-md-6">
+                <div class="posts-section">
+                    <h2>Posts</h2>
+                    {{#if currentUser}}
+                    <a href="posts/publish" class="btn btn-primary mb-3">Create New Post</a>
+                    {{/if}}
+                    {{#each posts}}
+                    <div class="post">
+                        <h3><a href="/posts/{{this._id}}">{{this.name}}</a></h3>
+                        <p>By <a href="/user/{{this.author.id}}" class="btn btn-link">{{this.author.username}}</a></p>
+                        <img src="{{this.image}}" class="img-fluid" alt="Post Image">
+                        <p>{{this.description}}</p>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <!-- Trending Topics Section -->
+            <div class="col-md-3">
+                <div class="trending-section">
+                    <h3>Trending Topics</h3>
+                    <ul>
+                        {{#each trendingHashtags}}
+                        <li><a href="/posts?hashtag={{this}}">#{{this}}</a></li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -98,5 +115,4 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
