@@ -29,6 +29,7 @@ const getTrendingHashtags = async () => {
   }
 };
 
+// Like Post
 router.post("/:id/like", middleware.isLoggedIn, async (req, res) => {
   try {
     const postId = req.params.id;
@@ -62,10 +63,23 @@ router.post("/:id/like", middleware.isLoggedIn, async (req, res) => {
   }
 });
 
-// Display all posts
+// Display all posts with sorting
 router.get("/", async (req, res) => {
   try {
-    const posts = await Post.find({});
+    const { filter } = req.query;
+    let posts;
+
+    switch (filter) {
+        case 'most-liked':
+            posts = await Post.find().sort({ likes: -1 }); // Sort by likes descending
+            break;
+        case 'most-recent':
+            posts = await Post.find().sort({ createdAt: -1 }); // Sort by date descending
+            break;
+        default:
+            posts = await Post.find(); // No sorting
+    }
+
     const trendingHashtags = await getTrendingHashtags();
 
     res.render("posts/index", {
@@ -147,7 +161,7 @@ router.put("/:id", middleware.checkPostOwnership, (req, res) => {
   });
 });
 
-// Handle Like Post
+// Handle Like Post (Duplicate removed)
 router.post("/:id/like", middleware.isLoggedIn, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
