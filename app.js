@@ -48,6 +48,8 @@ const userRoutes = require("./routes/user");
 const forgotRoutes = require("./routes/forgot");
 const resetRoutes = require("./routes/reset");
 const joinusRoutes = require("./routes/joinus")
+const completeProfileRoutes = require('./routes/complete-profile'); // Adjust the path if needed
+
 //---------------------------------------------
 
 //------------PASSPORT CONFIGURATION-----------
@@ -84,6 +86,7 @@ app.use("/user", userRoutes);
 app.use("/forgot" , forgotRoutes);
 app.use("/reset" , resetRoutes)
 app.use("/joinus" , joinusRoutes)
+app.use("/complete-profile" , completeProfileRoutes)
 
 let port = process.env.PORT || 8080;
 

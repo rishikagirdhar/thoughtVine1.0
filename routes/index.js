@@ -15,7 +15,6 @@ router.get("/register", (req, res) => {
   res.render("register");
 });
 
-
 // handle signup logic
 router.post("/register", (req, res) => {
   const { username, emailId, password } = req.body;
@@ -30,25 +29,27 @@ router.post("/register", (req, res) => {
       return res.render("register", { errorMessage: "Email is already registered." });
     }
 
-    // Create new user
+    // Create new user instance without password field
     var newUser = new User({ 
       username: username,
       emailId: emailId
     });
     
+    // Register user with passport-local-mongoose which handles password hashing
     User.register(newUser, password, (err, user) => {
       if (err) {
         console.log(err);
-        // Handle username already taken error
+        // Handle username already taken or other errors
         return res.render("register", { errorMessage: err.message });
       }
+
+      // Automatically log the user in after registration and redirect
       passport.authenticate("local")(req, res, () => {
-        res.redirect("/posts");
+        res.redirect("/complete-profile"); // Redirect to profile completion page
       });
     });
   });
 });
-
 
 // show login form
 router.get("/login", (req, res) => {

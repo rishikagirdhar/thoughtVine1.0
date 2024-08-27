@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f6f7f8;
+        }
+        .form-container {
+            margin-top: 50px;
+        }
+        .avatar-option {
+            margin: 10px;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .avatar-option.selected {
+            border-color: #0079d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container form-container">
+        <h2 class="text-center">Complete Your Profile</h2>
+        <form action="/complete-profile" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="college">College:</label>
+                <input type="text" class="form-control" id="college" name="college" required>
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio:</label>
+                <textarea class="form-control" id="bio" name="bio" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Choose an Avatar:</label>
+                <div class="d-flex justify-content-center">
+                    <img src="/images/avatar1.png" class="avatar-option" id="avatar1" data-avatar="avatar1.png" width="100" height="100" onclick="selectAvatar('avatar1.png')">
+                    <img src="/images/avatar2.png" class="avatar-option" id="avatar2" data-avatar="avatar2.png" width="100" height="100" onclick="selectAvatar('avatar2.png')">
+                    <img src="/images/avatar3.png" class="avatar-option" id="avatar3" data-avatar="avatar3.png" width="100" height="100" onclick="selectAvatar('avatar3.png')">
+                </div>
+                <input type="hidden" id="selectedAvatar" name="profilePicture" value="">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function selectAvatar(avatar) {
+            document.getElementById('selectedAvatar').value = avatar;
+            document.querySelectorAll('.avatar-option').forEach(img => img.classList.remove('selected'));
+            document.getElementById(avatar.split('.')[0]).classList.add('selected');
+        }
+    </script>
+</body>
+</html>
