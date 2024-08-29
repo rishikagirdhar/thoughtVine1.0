@@ -27,17 +27,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/posts">Posts</a>
                     </li>
-                    {{#if currentUser}}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/{{currentUser.username}}">My Posts</a>
-                    </li>
-                    {{/if}}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/join">Join Us</a>
-                    </li>
+
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     {{#unless currentUser}}
@@ -60,41 +50,52 @@
         </div>
     </nav>
 
-    <div class="container-fluid mt-5">
+<div class="container-fluid mt-5">
         <div class="row">
             <!-- Profile Section -->
             <div class="col-md-3">
+                {{#if currentUser}}
                 <div class="profile-section">
                     <h3>My Profile</h3>
                     <p><a href="/user/{{currentUser.username}}">View Profile</a></p>
+                    
+                    <!-- Button to filter posts by the logged-in user -->
+                    <button id="filter-my-posts" class="btn btn-primary mt-2">Show My Posts</button>
                 </div>
+                {{else}}
+                <script>
+                    window.location.href = '/login'; // Redirect to login page if not logged in
+                </script>
+                {{/if}}
             </div>
 
-            <!-- Main Content: Posts -->
-            <div class="col-md-6">
-                <div class="posts-section">
-                    <h2>Posts</h2>
-                    {{#if currentUser}}
-                    <a href="/posts/publish" class="btn btn-primary mb-3">Create New Post</a>
-                    {{/if}}
+        <!-- Main Content: Posts -->
+        <div class="col-md-6">
+            <div class="posts-section">
+                <h2>Posts</h2>
+                {{#if currentUser}}
+                <a href="/posts/publish" class="btn btn-primary mb-3">Create New Post</a>
+                {{/if}}
 
-                    <!-- Search and Filter Section -->
-                    <div class="search-filter-section mb-3">
-                        <input type="text" id="searchInput" class="form-control mb-2" placeholder="Search posts...">
-                        <select id="filterSelect" class="form-control">
-                            <option value="">Select Filter</option>
-                            <option value="most-liked">Most Liked</option>
-                            <option value="most-recent">Most Recent</option>
-                            <option value="all">All</option>
-                        </select>
-                    </div>
+                <!-- Search and Filter Section -->
+                <div class="search-filter-section mb-3">
+                    <input type="text" id="searchInput" class="form-control mb-2" placeholder="Search posts...">
+                    <select id="filterSelect" class="form-control">
+                        <option value="">Select Filter</option>
+                        <option value="most-liked">Most Liked</option>
+                        <option value="most-recent">Most Recent</option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
 
+                <!-- Posts Container -->
+                <div id="posts-container">
                     {{#each posts}}
                     <div class="post">
                         <h3><a href="/posts/{{this._id}}">{{this.name}}</a></h3>
-                        <p>By <a href="/user/{{this.author.id}}" class="btn btn-link">{{this.author.username}}</a></p>
+                        <p>By <a href="/user/{{this.author.username}}" class="btn btn-link">{{this.author.username}}</a></p>
                         <p>{{this.description}}</p>
-                        
+
                         <!-- Like Button as Heart Icon -->
                         <span class="like-section">
                             <i class="fa fa-heart like-icon" data-post-id="{{this._id}}"></i> 
@@ -111,20 +112,22 @@
                     {{/each}}
                 </div>
             </div>
+        </div>
 
-            <!-- Trending Topics Section -->
-            <div class="col-md-3">
-                <div class="trending-section">
-                    <h3>Trending thoughts</h3>
-                    <ul>
-                        {{#each trendingHashtags}}
-                        <li><a href="/posts?hashtag={{this}}">#{{this}}</a></li>
-                        {{/each}}
-                    </ul>
-                </div>
+        <!-- Trending Topics Section -->
+        <div class="col-md-3">
+            <div class="trending-section">
+                <h3>Trending thoughts</h3>
+                <ul>
+                    {{#each trendingHashtags}}
+                    <li><a href="/posts?hashtag={{this}}">#{{this}}</a></li>
+                    {{/each}}
+                </ul>
             </div>
         </div>
     </div>
+</div>
+
 
     <footer class="bg-dark text-white text-center py-3">
         <div class="container">
@@ -139,65 +142,85 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const isAuthenticated = {{isAuthenticated}}; // Server-side variable to check if user is logged in
+ <script>
+    const isAuthenticated = {{isAuthenticated}}; // Server-side variable to check if user is logged in
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle like button clicks
-            document.querySelectorAll('.like-icon').forEach(function(heartIcon) {
-                heartIcon.addEventListener('click', function() {
-                    if (!isAuthenticated) {
-                        window.location.href = '/login'; // Redirect to login if not authenticated
-                        return;
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle like button clicks
+        document.querySelectorAll('.like-icon').forEach(function(heartIcon) {
+            heartIcon.addEventListener('click', function() {
+                if (!isAuthenticated) {
+                    window.location.href = '/login'; // Redirect to login if not authenticated
+                    return;
+                }
+
+                const postId = this.getAttribute('data-post-id');
+
+                fetch(`/posts/${postId}/like`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.nextElementSibling.textContent = data.newLikeCount + ' Likes';
 
-                    const postId = this.getAttribute('data-post-id');
-
-                    fetch(`/posts/${postId}/like`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            this.nextElementSibling.textContent = data.newLikeCount + ' Likes';
-
-                            // Toggle the heart icon class to reflect like/unlike state
-                            if (data.liked) {
-                                this.classList.add('liked'); // Add 'liked' class when the post is liked
-                            } else {
-                                this.classList.remove('liked'); // Remove 'liked' class when the like is removed
-                            }
+                        // Toggle the heart icon class to reflect like/unlike state
+                        if (data.liked) {
+                            this.classList.add('liked'); // Add 'liked' class when the post is liked
                         } else {
-                            alert(data.message);
+                            this.classList.remove('liked'); // Remove 'liked' class when the like is removed
                         }
-                    })
-                    .catch(error => console.error('Error:', error));
-                });
-            });
-
-            // Handle search input
-            document.getElementById('searchInput').addEventListener('input', function() {
-                const query = this.value.toLowerCase();
-                document.querySelectorAll('.post').forEach(function(post) {
-                    const title = post.querySelector('h3 a').textContent.toLowerCase();
-                    if (title.includes(query)) {
-                        post.style.display = 'block';
                     } else {
-                        post.style.display = 'none';
+                        alert(data.message);
                     }
-                });
-            });
-
-            // Handle filter selection
-            document.getElementById('filterSelect').addEventListener('change', function() {
-                const filter = this.value;
-                // Assuming the server-side logic handles filtering based on the query parameters
-                window.location.href = `/posts?filter=${filter}`;
+                })
+                .catch(error => console.error('Error:', error));
             });
         });
-    </script>
+
+        // Handle search input
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll('.post').forEach(function(post) {
+                const title = post.querySelector('h3 a').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        });
+
+        // Handle filter selection
+        document.getElementById('filterSelect').addEventListener('change', function() {
+            const filter = this.value;
+            // Assuming the server-side logic handles filtering based on the query parameters
+            window.location.href = `/posts?filter=${filter}`;
+        });
+
+        // Handle "Show My Posts" button click
+        document.getElementById('filter-my-posts').addEventListener('click', function() {
+            filterPostsByCurrentUser();
+        });
+
+        // Function to filter posts by the logged-in user
+        function filterPostsByCurrentUser() {
+            const userId = '{{currentUser._id}}'; // Assuming user ID is passed from the server-side template engine
+            
+            document.querySelectorAll('.post').forEach(function(post) {
+                const authorId = post.querySelector('a.btn-link').getAttribute('href').split('/')[2]; // Extracting user ID from href
+                if (authorId === userId) {
+                    post.style.display = 'block'; // Show the post if it belongs to the current user
+                } else {
+                    post.style.display = 'none'; // Hide other posts
+                }
+            });
+        }
+    });
+</script>
+
 </body>
 </html>

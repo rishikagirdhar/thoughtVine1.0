@@ -89,7 +89,7 @@ app.use("/posts/:id/comments", commentRoutes);
 app.use("/user", userRoutes);
 app.use("/forgot" , forgotRoutes);
 app.use("/reset" , resetRoutes)
-app.use("/joinus" , joinusRoutes)
+app.use("/" , joinusRoutes)
 
 
 let port = process.env.PORT || 8080;

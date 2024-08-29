@@ -18,17 +18,18 @@ const getTrendingHashtags = async () => {
         }
       });
     });
-    // Get posts by user ID
-    router.get('/posts/my-posts', async (req, res) => {
-      try {
-          // Fetch posts based on user ID from the session or token
-          const userId = req.user._id; // Example: get user ID from the request object
-          const posts = await Post.find({ author: userId });
-          res.json(posts);
-      } catch (err) {
-          res.status(500).json({ message: err.message });
-      }
-    });
+
+    // Endpoint to get all posts
+router.get('/posts/all', async (req, res) => {
+  try {
+      const posts = await Post.find().populate('author', 'username id'); // Populate author field with username and id
+      res.json(posts);
+  } catch (err) {
+      res.status(500).json({ message: err.message });
+  }
+});
+
+
     // Sort hashtags by count in descending order
     return Object.entries(hashtagCount)
                  .sort((a, b) => b[1] - a[1])

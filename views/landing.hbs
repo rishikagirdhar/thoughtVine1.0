@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Freestyle+Script&display=swap">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="/landing.css" rel="stylesheet" />
+    <style>
+        /* Reduce the font size of the typing effect */
+        .typing-effect {
+            font-size: 1.2rem; /* Adjust this value as needed */
+        }
+    </style>
 </head>
 
 <body>
@@ -33,12 +39,7 @@
                         <a class="nav-link" href="/user/{{currentUser.username}}">My Posts</a>
                     </li>
                     {{/if}}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/join">Join Us</a>
-                    </li>
+
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     {{#unless currentUser}}
@@ -65,22 +66,22 @@
         <div class="container">
             <div class="masthead-content">
                 <div class="static-text">Welcome To thoughtVine</div>
-                <div id="typewriter" class="typing-effect">Fall in Love With Your Community</div>
-                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="/posts">SHOW POSTS</a>
+                <div id="typewriter" class="typing-effect">'Confess, Vent, and Share'</div>
+                <a class="btn btn-primary btn-xl text-uppercase" href="/posts">SHOW POSTS</a>
             </div>
         </div>
     </header>
 
-    <section id="about-thoughtvine">
-    <div class="container">
-        <h2>Discover thoughtVine</h2>
-        <ul>
-        <li>Connect with like-minded individuals.</li>
-        <li>Share your unique perspectives and experiences.</li>
-        <li>Engage in insightful discussions on various topics.</li>
-        <li>Find new ideas and inspirations from our community.</li>
-        </ul>
-    </div>
+    <section id="about">
+        <div class="container">
+            <h2>Discover thoughtVine</h2>
+            <ul>
+                <li>Connect with fellow students and alumni.</li>
+                <li>Share your college experiences, stories, and opinions.</li>
+                <li>Engage in lively discussions and debates on campus life.</li>
+                <li>Find support, advice, and inspiration from the community.</li>
+            </ul>
+        </div>
     </section>
 
     <section id="join" class="py-5">
@@ -124,73 +125,75 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Custom scripts -->
-<script>
-    $(document).ready(function () {
-        // Smooth scrolling for links
-        $('a.js-scroll-trigger').click(function (e) {
-            e.preventDefault();
-            $('html, body').animate({
-                scrollTop: $($(this).attr('href')).offset().top
-            }, 1000);
+    <script>
+        $(document).ready(function () {
+            // Smooth scrolling for links
+            $('a.js-scroll-trigger').click(function (e) {
+                e.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $($(this).attr('href')).offset().top
+                }, 1000);
+            });
+
+            // Typing effect
+            const typewriterElement = document.getElementById('typewriter');
+            const texts = [
+                'Confess, Vent, and Share',
+                'Talk about your professors and campus life',
+                'Have a thought? Just share it!'
+            ];
+            let currentIndex = 0;
+            let currentText = '';
+            let isDeleting = false;
+
+            function type() {
+                const fullText = texts[currentIndex];
+                if (isDeleting) {
+                    currentText = fullText.substring(0, currentText.length - 1);
+                } else {
+                    currentText = fullText.substring(0, currentText.length + 1);
+                }
+                typewriterElement.textContent = currentText;
+
+                if (!isDeleting && currentText === fullText) {
+                    setTimeout(() => { isDeleting = true; }, 1000); // Shorter pause at end of text
+                } else if (isDeleting && currentText === '') {
+                    isDeleting = false;
+                    currentIndex = (currentIndex + 1) % texts.length;
+                    setTimeout(type, 200); // Shorter delay before starting next text
+                    return;
+                }
+
+                setTimeout(type, isDeleting ? 30 : 60); // Increase typing speed
+            }
+
+            type();
         });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Intersection Observer setup
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
 
-        // Typing effect
-        const typewriterElement = document.getElementById('typewriter');
-        const texts = ['Fall in Love With Your Community', 'Talk about Things You Love', 'Share Your Experiences'];
-        let currentIndex = 0;
-        let currentText = '';
-        let isDeleting = false;
+            const fadeInObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible'); // Optionally, remove visibility if out of view
+                    }
+                });
+            }, observerOptions);
 
-        function type() {
-            const fullText = texts[currentIndex];
-            if (isDeleting) {
-                currentText = fullText.substring(0, currentText.length - 1);
-            } else {
-                currentText = fullText.substring(0, currentText.length + 1);
-            }
-            typewriterElement.textContent = currentText;
-
-            if (!isDeleting && currentText === fullText) {
-                setTimeout(() => { isDeleting = true; }, 1000); // Shorter pause at end of text
-            } else if (isDeleting && currentText === '') {
-                isDeleting = false;
-                currentIndex = (currentIndex + 1) % texts.length;
-                setTimeout(type, 200); // Shorter delay before starting next text
-                return;
-            }
-
-            setTimeout(type, isDeleting ? 30 : 60); // Increase typing speed
-        }
-
-        type();
-    });
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Intersection Observer setup
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-
-    const fadeInObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        } else {
-          entry.target.classList.remove('visible'); // Optionally, remove visibility if out of view
-        }
-      });
-    }, observerOptions);
-
-    // Target all list items for fade-in effect
-    const listItems = document.querySelectorAll('#about-thoughtvine li');
-    listItems.forEach(item => fadeInObserver.observe(item));
-  });
-</script>
-
-
+            // Target all list items for fade-in effect
+            const listItems = document.querySelectorAll('#about-thoughtvine li');
+            listItems.forEach(item => fadeInObserver.observe(item));
+        });
+    </script>
 </body>
 
 </html>
