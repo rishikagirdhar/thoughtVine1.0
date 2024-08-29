@@ -8,7 +8,7 @@
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Freestyle+Script&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnH1zq+6XkJxoXtUo1i0k1mOh+zElG1ypYBO9IdUn4Xf12/LmX3JZ9aB8o36Yt6QKP9AYjsCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="/posts.css"> <!-- Your custom styles -->
 </head>
 <body>
@@ -83,8 +83,8 @@
                         <input type="text" id="searchInput" class="form-control mb-2" placeholder="Search posts...">
                         <select id="filterSelect" class="form-control">
                             <option value="">Select Filter</option>
-                            <option value="mostLiked">Most Liked</option>
-                            <option value="mostRecent">Most Recent</option>
+                            <option value="most-liked">Most Liked</option>
+                            <option value="most-recent">Most Recent</option>
                             <option value="all">All</option>
                         </select>
                     </div>
@@ -93,13 +93,12 @@
                     <div class="post">
                         <h3><a href="/posts/{{this._id}}">{{this.name}}</a></h3>
                         <p>By <a href="/user/{{this.author.id}}" class="btn btn-link">{{this.author.username}}</a></p>
-                        <img src="{{this.image}}" class="img-fluid" alt="Post Image">
                         <p>{{this.description}}</p>
                         
                         <!-- Like Button as Heart Icon -->
                         <span class="like-section">
                             <i class="fa fa-heart like-icon" data-post-id="{{this._id}}"></i> 
-                            <span class="like-count">{{this.likes}}</span> 
+                            <span class="like-count">{{this.likes}} Likes</span> 
                         </span>
 
                         <!-- Comment Button as Thinking Cloud Icon -->

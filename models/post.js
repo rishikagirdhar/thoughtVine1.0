@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 // Define the Post schema
 const postSchema = new mongoose.Schema({
   name: String,
-  image: String,
   description: String,
   author: {
     id: {
@@ -27,6 +26,6 @@ const postSchema = new mongoose.Schema({
       ref: 'Comment'
     }
   ]
-});
+}, { timestamps: true }); // Adds createdAt and updatedAt fields
 
 module.exports = mongoose.model('Post', postSchema);

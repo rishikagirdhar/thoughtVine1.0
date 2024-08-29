@@ -53,11 +53,6 @@ body {
   text-decoration: underline;
 }
 
-.post img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
 
 /* Trending Topics Section */
 .trending-section {

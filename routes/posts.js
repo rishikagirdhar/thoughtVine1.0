@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const Post = require("../models/post");
-const middleware = require("../middleware");
+const middleware = require("../middleware/index");
 
 // Function for finding trending hashtags
 const getTrendingHashtags = async () => {
@@ -18,7 +18,17 @@ const getTrendingHashtags = async () => {
         }
       });
     });
-
+    // Get posts by user ID
+    router.get('/posts/my-posts', async (req, res) => {
+      try {
+          // Fetch posts based on user ID from the session or token
+          const userId = req.user._id; // Example: get user ID from the request object
+          const posts = await Post.find({ author: userId });
+          res.json(posts);
+      } catch (err) {
+          res.status(500).json({ message: err.message });
+      }
+    });
     // Sort hashtags by count in descending order
     return Object.entries(hashtagCount)
                  .sort((a, b) => b[1] - a[1])
@@ -63,6 +73,7 @@ router.post("/:id/like", middleware.isLoggedIn, async (req, res) => {
   }
 });
 
+
 // Display all posts with sorting
 router.get("/", async (req, res) => {
   try {
@@ -70,14 +81,14 @@ router.get("/", async (req, res) => {
     let posts;
 
     switch (filter) {
-        case 'most-liked':
-            posts = await Post.find().sort({ likes: -1 }); // Sort by likes descending
-            break;
-        case 'most-recent':
-            posts = await Post.find().sort({ createdAt: -1 }); // Sort by date descending
-            break;
-        default:
-            posts = await Post.find(); // No sorting
+      case 'most-liked':
+        posts = await Post.find().sort({ likes: -1 }); // Sort by likes descending
+        break;
+      case 'most-recent':
+        posts = await Post.find().sort({ createdAt: -1 }); // Sort by creation date descending
+        break;
+      default:
+        posts = await Post.find().sort({ createdAt: -1 }); // Sort by creation date descending if no filter is applied
     }
 
     const trendingHashtags = await getTrendingHashtags();
@@ -96,10 +107,9 @@ router.get("/", async (req, res) => {
 
 // Create new post
 router.post("/", middleware.isLoggedIn, (req, res) => {
-  const { name, image, description, hashtags } = req.body;
+  const { name, description, hashtags } = req.body;
   const newPost = {
     name,
-    image,
     description,
     author: {
       id: req.user._id,
@@ -159,19 +169,6 @@ router.put("/:id", middleware.checkPostOwnership, (req, res) => {
       res.redirect("/posts/" + req.params.id);
     }
   });
-});
-
-// Handle Like Post (Duplicate removed)
-router.post("/:id/like", middleware.isLoggedIn, async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    post.likes += 1;
-    await post.save();
-    res.json({ success: true, newLikeCount: post.likes });
-  } catch (err) {
-    console.error("Error liking the post:", err);
-    res.status(500).json({ success: false, message: "An error occurred while liking the post." });
-  }
 });
 
 // Delete post

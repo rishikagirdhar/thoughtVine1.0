@@ -9,75 +9,142 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/PostCreation.css"> <!-- Your custom styles -->
+    <link rel="stylesheet" href="/PostCreation.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/posts">Posts</a>
-                </li>
-                {{#if currentUser}}
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/{{currentUser.username}}">My Posts</a>
-                </li>
-                {{/if}}
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                {{#unless currentUser}}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Sign Up</a>
-                </li>
-                {{else}}
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/{{currentUser.username}}">Signed In as {{currentUser.username}}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">LogOut</a>
-                </li>
-                {{/unless}}
-            </ul>
-        </div>
-    </nav>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Add a New Post</h1>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <form action="/posts" method="POST">
-                    <div class="form-group">
-                        <label for="name">Post Name</label>
-                        <input class="form-control" id="name" type="text" name="name" placeholder="Enter post name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="image">Image URL</label>
-                        <input class="form-control" id="image" type="url" name="image" placeholder="Enter image URL" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="hashtags">Hashtags (comma separated)</label>
-                        <input class="form-control" id="hashtags" type="text" name="hashtags" placeholder="Enter hashtags">
-                        <small class="form-text text-muted">Add relevant hashtags to help others find your post.</small>
-                    </div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
-                </form>
-                <a class="btn btn-secondary btn-block mt-3" href="/posts">Go back</a>
+    <!-- Navbar from landing page -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">thoughtVine</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/posts">Posts</a>
+                    </li>
+                    {{#if currentUser}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/{{currentUser.username}}">My Posts</a>
+                    </li>
+                    {{/if}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/join">Join Us</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {{#unless currentUser}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Sign Up</a>
+                    </li>
+                    {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/{{currentUser.username}}">Signed In as {{currentUser.username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">LogOut</a>
+                    </li>
+                    {{/unless}}
+                </ul>
             </div>
         </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
+        <div class="post-creation-container">
+            <h1 class="text-center mb-4">Create a New Post</h1>
+            <form action="/posts" method="POST">
+                <div class="form-group">
+                    <input class="form-control" id="name" type="text" name="name" placeholder="What's on your mind?" required>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Write something..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="hashtags" type="text" name="hashtags" placeholder="Add hashtags (comma separated)">
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary btn-lg" type="submit">Post</button>
+                </div>
+            </form>
+        </div>
     </div>
+
+    <!-- Footer from landing page -->
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <div class="container">
+            <p>&copy; 2024 thoughtVine. All Rights Reserved.</p>
+            <div>
+                <a href="#" class="text-white mr-3"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white mr-3"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-white mr-3"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        /* PostCreation.css */
+
+        /* Ensure footer is at the bottom */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .post-creation-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-creation-form .form-control {
+            border-radius: 0.5rem;
+            border: 1px solid #ced4da;
+            box-shadow: none;
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        .post-creation-form .form-control:focus {
+            border-color: #007bff;
+            box-shadow: none;
+        }
+
+        .post-creation-form .btn {
+            padding: 0.5rem 1.5rem;
+            font-size: 1.25rem;
+            border-radius: 0.5rem;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .post-creation-form .btn:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            margin-top: auto;
+        }
+    </style>
 </body>
 </html>
