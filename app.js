@@ -9,6 +9,8 @@ const methodOverride = require("method-override");
 const User = require("./models/user");
 const path = require('path');
 const flash = require("connect-flash");
+const hbs = require('hbs');
+
 
 //---------DATABASE SETUP------------------
 const mongo_uri = process.env.mongo_uri;
@@ -39,7 +41,9 @@ app.use('/uploads', express.static('uploads'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //-------------------------------------------
-
+hbs.registerHelper('isCurrentUser', function(currentUsername, profileUsername, options) {
+  return currentUsername === profileUsername;
+});
 //------------ROUTERS------------------------
 const commentRoutes = require("./routes/comments");
 const postRoutes = require("./routes/posts");
@@ -48,7 +52,7 @@ const userRoutes = require("./routes/user");
 const forgotRoutes = require("./routes/forgot");
 const resetRoutes = require("./routes/reset");
 const joinusRoutes = require("./routes/joinus")
-const completeProfileRoutes = require('./routes/complete-profile'); // Adjust the path if needed
+
 
 //---------------------------------------------
 
@@ -86,7 +90,7 @@ app.use("/user", userRoutes);
 app.use("/forgot" , forgotRoutes);
 app.use("/reset" , resetRoutes)
 app.use("/joinus" , joinusRoutes)
-app.use("/complete-profile" , completeProfileRoutes)
+
 
 let port = process.env.PORT || 8080;
 

@@ -1,18 +1,22 @@
-const mongoose = require("mongoose");
+
 var passwordLocalMongoose = require("passport-local-mongoose");
 const bcrypt = require("bcrypt");
 
-var UserSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
+const mongoose = require('mongoose');
+
+const UserSchema = new mongoose.Schema({
+  username: { type: String, required: true },
   emailId: { type: String, required: true, unique: true },
   password: String,
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
-  profilePicture: String,  // URL or path to the user's profile picture
-  bio: String,             // A short biography or user description
-  otherDetails: String,    // Any additional details you want to store
-  college: String          // New field for user's college
-});
+  profilePicture: { type: String, default: '/images/default-profile.png' },
+  name: { type: String },
+  bio: { type: String },
+  college: { type: String },
+  otherDetails: { type: String },
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+  // Additional fields as necessary
+}, { timestamps: true });
+
 
 // Hash the password before saving
 UserSchema.pre('save', function(next) {

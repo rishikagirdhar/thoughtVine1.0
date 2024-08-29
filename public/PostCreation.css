@@ -1,58 +1,178 @@
-/* General Styles */
+/* Navbar */
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  justify-content: flex-start;
+}
+
+@keyframes floatBounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* General Body Style */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+  background-color: #f4f4f4;
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+}
+
+/* Hero Section */
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the start (left) */
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.1), /* Top white glare */
+      rgba(255, 255, 255, 0) /* Fading to transparent */
+    ),
+    #2d4a6c; /* Apply uniform background color */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  height: 100vh;
+  padding: 20px; /* Add some padding to avoid text touching the edges */
+}
+
+.masthead .container {
+  display: flex;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace; /* Monospace font */
+  justify-content: flex-start; /* Align items to the start (left) */
+  height: 100%;
+}
+
+.masthead .masthead-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the start (left) */
+  justify-content: center; /* Center content vertically */
+  text-align: left; /* Align text to the left */
+  padding: 0 20px; /* Add padding to avoid content touching the edges */
+}
+
+.masthead .static-text {
+  font-family: 'Courier New', Courier, monospace; /* Monospace font */
+  margin-bottom: 0.5rem;
+  font-size: 4rem; /* Decrease font size for typing effect text */
+  /*animation: floatBounce 3s ease-in-out infinite; /* Floating animation */
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Shadow effect */
+}
+
+.masthead .typing-effect {
+  font-family: 'Courier New', Courier, monospace; /* Monospace font */
+  opacity: 0.2;
+  font-size: 3rem; /* Decrease font size for typing effect text */
+  margin-bottom: 1rem;
+  white-space: nowrap; /* Ensure no wrapping of the text */
+  color: white; /* Color for the typing text */
+}
+
+/* Button Styles */
+.btn-primary {
+  color: #fff;
+  background-color: #2d4a6c; /* Background blue */
+  border-color: #2d4a6c; /* Border color */
+}
+
+.btn-xl {
+  padding: 1.25rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  color: #fff;
+  background-color: #1a2a3b; /* Darker blue for hover */
+  border-color: #1a2a3b; /* Darker blue for border */
+}
+
+/* About Section */
+/* About Section */
+#about-thoughtvine {
+  background-color: #2d4a6c; /* Uniform background color */
+  color: white;
+  padding: 100px 0;
+  text-align: center; /* Center-align text */
+}
+
+#about-thoughtvine h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+#about-thoughtvine ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#about-thoughtvine li {
+  font-size: 1.25rem;
+  margin: 1rem 0;
+  opacity: 0; /* Hidden initially */
+  transform: translateY(20px); /* Start from below */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+#about-thoughtvine li.visible {
+  opacity: 1; /* Visible when in view */
+  transform: translateY(0); /* Move to original position */
+}
+/* Join Us Section */
+#join {
+  background-color: #2d4a6c; /* Uniform background color */
+  color: white;
+  padding: 100px 0;
+}
+
+/* Form */
+#joinForm {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#joinForm .form-group {
+  margin-bottom: 1.5rem;
+}
+
+#joinForm .form-control {
+  padding: 1.25rem;
+  border-radius: 0;
+}
+
+#joinForm .form-control-file {
+  padding-top: 0.5rem;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .masthead {
+    padding: 50px 0;
+    height: auto;
   }
-  
-  /* Navbar */
-  .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    font-family: 'Courier New', monospace;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  /* Post Creation Form */
-  .container {
-    margin-top: 30px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  h1 {
-    color: #333;
-  }
-  
-  /* Form Styles */
-  .form-group label {
-    font-weight: bold;
-  }
-  
-  .form-control {
-    border-radius: 0.25rem;
-  }
-  
-  textarea.form-control {
-    border-radius: 0.25rem;
-  }
-  
-  .btn-primary {
-    background-color: #2d4a6c; /* Button color matching theme */
-    border-color: #2d4a6c;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-primary:hover {
-    background-color: #1b2f46; /* Darker shade on hover */
-    border-color: #1b2f46;
-  }
-  
-  .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #5a6268;
-    border-color: #545b62;
-  }
-  
+}
