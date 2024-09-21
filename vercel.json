@@ -30,6 +30,6 @@
         },
         "api/user.js": {
           "maxDuration": 30
-        },
+        }
     }
   }
