@@ -7,25 +7,25 @@
     }
   ],
   "functions": {
-    "api/comments.js": {
+    "routes/comments.js": {
       "maxDuration": 30
     },
-    "api/forgot.js": {
+    "routes/forgot.js": {
       "maxDuration": 30
     },
-    "api/index.js": {
+    "routes/index.js": {
       "maxDuration": 30
     },
-    "api/joinus.js": {
+    "routes/joinus.js": {
       "maxDuration": 30
     },
-    "api/posts.js": {
+    "routes/posts.js": {
       "maxDuration": 30
     },
-    "api/reset.js": {
+    "routes/reset.js": {
       "maxDuration": 30
     },
-    "api/user.js": {
+    "routes/user.js": {
       "maxDuration": 30
     }
   }
