@@ -1,37 +1,32 @@
 {
-    "version":2,
-    "builds": [
-      { "src": "./app.js", "use": "@vercel/node" }
-    ],
-    "routes": [
-        {
-          "src": "/(.*)",
-          "dest": "/app.js"
-        }
-    ],
-    "functions":
-        {
-        "api/comments.js": {
-            "maxDuration": 30 
-        },
-        "api/forgot.js": {
-              "maxDuration": 30 
-        },
-        "api/index.js": {
-          "maxDuration": 30
-        },
-        "api/joinus.js": {
-          "maxDuration": 30
-        },
-        "api/posts.js": {
-            "maxDuration": 30
-        },
-        "api/reset.js": {
-          "maxDuration": 30
-        },
-        "api/user.js": {
-          "maxDuration": 30
-        }
+  "version": 2,
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/app.js"
     }
-    
+  ],
+  "functions": {
+    "api/comments.js": {
+      "maxDuration": 30
+    },
+    "api/forgot.js": {
+      "maxDuration": 30
+    },
+    "api/index.js": {
+      "maxDuration": 30
+    },
+    "api/joinus.js": {
+      "maxDuration": 30
+    },
+    "api/posts.js": {
+      "maxDuration": 30
+    },
+    "api/reset.js": {
+      "maxDuration": 30
+    },
+    "api/user.js": {
+      "maxDuration": 30
+    }
   }
+}
