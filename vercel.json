@@ -9,4 +9,27 @@
           "dest": "/app.js"
         }
     ]
+    "functions":{
+        "api/comments.js": {
+            "maxDuration": 30 // This function can run for a maximum of 30 seconds
+        },
+        "api/forgot.js": {
+              "maxDuration": 30 // This function can run for a maximum of 30 seconds
+        },
+        "api/index.js": {
+          "maxDuration": 30 // This function can run for a maximum of 30 seconds
+        },
+        "api/joinus.js": {
+          "maxDuration": 30 // This function can run for a maximum of 30 seconds
+        },
+        "api/posts.js": {
+            "maxDuration": 30 // This function can run for a maximum of 30 seconds
+        },
+        "api/reset.js": {
+          "maxDuration": 30 // This function can run for a maximum of 30 seconds
+        },
+        "api/user.js": {
+          "maxDuration": 30 // This function can run for a maximum of 30 seconds
+        },
+    }
   }
