@@ -1,32 +1,12 @@
 {
   "version": 2,
+  "builds": [
+    { "src": "./app.js", "use": "@vercel/node" }
+  ],
   "routes": [
     {
       "src": "/(.*)",
       "dest": "/app.js"
     }
   ],
-  "functions": {
-    "routes/comments.js": {
-      "maxDuration": 30
-    },
-    "routes/forgot.js": {
-      "maxDuration": 30
-    },
-    "routes/index.js": {
-      "maxDuration": 30
-    },
-    "routes/joinus.js": {
-      "maxDuration": 30
-    },
-    "routes/posts.js": {
-      "maxDuration": 30
-    },
-    "routes/reset.js": {
-      "maxDuration": 30
-    },
-    "routes/user.js": {
-      "maxDuration": 30
-    }
-  }
 }
