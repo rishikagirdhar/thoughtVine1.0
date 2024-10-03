@@ -45,7 +45,7 @@ router.post("/register", (req, res) => {
 
       // Automatically log the user in after registration and redirect
       passport.authenticate("local")(req, res, () => {
-        res.redirect("/complete-profile"); // Redirect to profile completion page
+        res.redirect("/posts"); // Redirect to profile completion page
       });
     });
   });

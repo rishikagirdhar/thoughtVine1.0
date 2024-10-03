@@ -68,6 +68,14 @@
                 </script>
                 {{/if}}
             </div>
+            <script>
+                // Only attach this listener if the user is logged in
+                {{#if currentUser}}
+                document.getElementById("filter-my-posts").addEventListener("click", function () {
+                    window.location.href = `/posts?filter=my-posts`; // Navigate to filtered posts page
+                });
+                {{/if}}
+            </script>
 
         <!-- Main Content: Posts -->
         <div class="col-md-6">

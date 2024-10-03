@@ -15,10 +15,25 @@
         .typing-effect {
             font-size: 1.2rem; /* Adjust this value as needed */
         }
+
+        .dev-note {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Top development note -->
+    <div class="dev-note">
+        This site is still under development. Major changes are coming! Have a suggestion? Email us at 
+        <strong>thoughtvinehelp@gmail.com</strong>.
+    </div>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/">thoughtVine</a>
@@ -39,7 +54,6 @@
                         <a class="nav-link" href="/user/{{currentUser.username}}">My Posts</a>
                     </li>
                     {{/if}}
-
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     {{#unless currentUser}}
@@ -61,6 +75,12 @@
             </div>
         </div>
     </nav>
+
+    <!-- Development note below navbar -->
+    <div class="dev-note">
+        This site is still under development. Major changes are coming! Have a suggestion? Email us at 
+        <strong>thoughtvinehelp@gmail.com</strong>.
+    </div>
 
     <header class="masthead">
         <div class="container">
@@ -168,30 +188,6 @@
             }
 
             type();
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Intersection Observer setup
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const fadeInObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    } else {
-                        entry.target.classList.remove('visible'); // Optionally, remove visibility if out of view
-                    }
-                });
-            }, observerOptions);
-
-            // Target all list items for fade-in effect
-            const listItems = document.querySelectorAll('#about-thoughtvine li');
-            listItems.forEach(item => fadeInObserver.observe(item));
         });
     </script>
 </body>

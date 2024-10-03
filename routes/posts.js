@@ -75,36 +75,42 @@ router.post("/:id/like", middleware.isLoggedIn, async (req, res) => {
 });
 
 
-// Display all posts with sorting
-router.get("/", async (req, res) => {
+// Display all posts with sorting and filtering options
+router.get("/", middleware.isLoggedIn, async (req, res) => {
   try {
-    const { filter } = req.query;
+    const { filter } = req.query; // Check for filter query parameter
     let posts;
 
-    switch (filter) {
-      case 'most-liked':
-        posts = await Post.find().sort({ likes: -1 }); // Sort by likes descending
-        break;
-      case 'most-recent':
-        posts = await Post.find().sort({ createdAt: -1 }); // Sort by creation date descending
-        break;
-      default:
-        posts = await Post.find().sort({ createdAt: -1 }); // Sort by creation date descending if no filter is applied
+    if (filter === 'my-posts') {
+      // Show only posts by the logged-in user
+      posts = await Post.find({ "author.id": req.user._id }).sort({ createdAt: -1 });
+    } else {
+      // Apply sorting based on the filter (most-liked, most-recent, etc.)
+      switch (filter) {
+        case 'most-liked':
+          posts = await Post.find().sort({ likes: -1 }); // Sort by likes descending
+          break;
+        case 'most-recent':
+        default:
+          posts = await Post.find().sort({ createdAt: -1 }); // Default: Sort by creation date descending
+      }
     }
 
     const trendingHashtags = await getTrendingHashtags();
 
+    // Render the posts page with filtered or sorted posts
     res.render("posts/index", {
       posts,
       trendingHashtags,
-      currentUser: req.user, // Pass the current user
-      isAuthenticated: req.isAuthenticated(), // Add isAuthenticated to check login status
+      currentUser: req.user, // Pass the current user for authentication
+      isAuthenticated: req.isAuthenticated(), // Check if user is logged in
     });
   } catch (err) {
     console.error("Error fetching posts:", err);
     res.status(500).send("An error occurred while fetching posts.");
   }
 });
+
 
 // Create new post
 router.post("/", middleware.isLoggedIn, (req, res) => {
