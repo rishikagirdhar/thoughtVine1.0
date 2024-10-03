@@ -20,18 +20,18 @@ const upload = multer({ storage: storage });
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'your-email@gmail.com', // Your email
-    pass: 'your-email-password' // Your email password
+    user: 'thoughtvinehelp@gmail.com',
+    pass: 'inwp mfpt gcvh namx' // Use environment variable for security
   }
 });
 
-router.post('/join-us', upload.single('resume'), (req, res) => {
+router.post('/submit-form', upload.single('resume'), (req, res) => {
   const { name, email, message } = req.body;
   const resumePath = req.file.path;
 
   const mailOptions = {
-    from: 'your-email@gmail.com',
-    to: 'your-email@gmail.com',
+    from: email,
+    to: 'thoughtvinehelp@gmail.com',
     subject: 'New Developer Joining Request',
     text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     attachments: [

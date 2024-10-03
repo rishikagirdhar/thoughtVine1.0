@@ -28,17 +28,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/posts">Posts</a>
                     </li>
-                    {{#if currentUser}}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/{{currentUser.username}}">My Posts</a>
-                    </li>
-                    {{/if}}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/join">Join Us</a>
-                    </li>
+
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     {{#unless currentUser}}

@@ -82,6 +82,16 @@ body {
   color: darkred; /* Change this to your preferred color */
 }
 
+#filter-my-posts {
+  margin-top: 10px;
+  background-color: #2d4a6c;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+#filter-my-posts:hover {
+  background-color: #1a2a3b;
+}
 
 /* Footer Styles */
 footer {
