@@ -11,13 +11,21 @@ router.get("/", (req, res) => {
 });
 
 //show register form
+
 router.get("/register", (req, res) => {
   res.render("register");
 });
 
-// handle signup logic
 router.post("/register", (req, res) => {
   const { username, emailId, password } = req.body;
+
+  // Regular expression to validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Check if email is in valid format
+  if (!emailRegex.test(emailId)) {
+    return res.render("register", { errorMessage: "Please enter a valid email address." });
+  }
 
   // Check if email is already taken
   User.findOne({ emailId: emailId }, (err, existingUser) => {
@@ -50,6 +58,7 @@ router.post("/register", (req, res) => {
     });
   });
 });
+
 
 // show login form
 router.get("/login", (req, res) => {
