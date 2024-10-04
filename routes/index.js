@@ -11,6 +11,11 @@ router.get("/", (req, res) => {
 });
 
 //show register form
+
+router.get("/register", (req, res) => {
+  res.render("register");
+});
+
 router.post("/register", (req, res) => {
   const { username, emailId, password } = req.body;
 
